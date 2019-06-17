@@ -1,7 +1,7 @@
 'use strict'
 
 let $searchform = $('#search-form');
-let $bookList = $('#book-list');
+let $bookList = $('#books-list');
 let arrBooks = [];
 
 $searchform.on("submit", function(event){
@@ -23,7 +23,7 @@ function getBooks (query) {
         $bookList.empty();
 
         arrBooks.forEach(function (book) {
-            $('<a href="">'.addClass('list-group-item'))
+            $('<a href="">').addClass('list-group-item')
                 .text(book.volumeInfo.title)
                 .attr('data-id', book.id)
                 .appendTo($bookList);
