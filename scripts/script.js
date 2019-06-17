@@ -17,10 +17,12 @@ function getBooks (query) {
     $.ajax({
         url: server,
         method: "GET",
-        data: `q=$(query) `
+        data: `q=${query} `
     }).done(function(response) {
         arrBooks = response.items;
+        console.log(arrBooks);
         $bookList.empty();
+        console.log($bookList);
 
         arrBooks.forEach(function (book) {
             $('<a href="">').addClass('list-group-item')
