@@ -1,6 +1,9 @@
 'use strict'
 
 let $searchform = $('#search-form');
+let $bookList = $('#book-list');
+let arrBooks = [];
+
 $searchform.on("submit", function(event){
     event.preventDefault();
     let query = $(this).find('[name="scrh-term"]').val().replace(/\s/g, "+");
@@ -16,7 +19,16 @@ function getBooks (query) {
         method: "GET",
         data: `q=$(query) `
     }).done(function(response) {
-        console.log(response);
+        arrBooks = response.items;
+        $bookList.empty();
+
+        arrBooks.forEach(function (book) {
+            $('<a href="">'.addClass('list-group-item'))
+                .text(book.volumeInfo.title)
+                .attr('data-id', book.id)
+                .appendTo($bookList);
+        })
+
     }).fail(function (error) {
         console.log(error);
     })
