@@ -2,6 +2,7 @@
 
 let $searchform = $('#search-form');
 let $bookList = $('#books-list');
+let $currentBook = $('#current-book');
 let arrBooks = [];
 
 $searchform.on("submit", function(event){
@@ -35,3 +36,17 @@ function getBooks (query) {
         console.log(error);
     })
 }
+
+$bookList.on('click', '[data-id]', function(event) {
+    event.preventDefault();
+    let bookId = $(this).data('id');
+    
+    let book = arrBooks.find(function(item) {
+        return item.id === bookId;
+    });
+
+    $currentBook.fadeIn();
+
+    $currentBook.find('.book-title') 
+        .text(`${book.volumeInfo.title} | ${book.volumeInfo.authors.join(', ')} (${book.volumeInfo.publishedDate})`)
+});
