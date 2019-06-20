@@ -3,6 +3,7 @@
 let $searchform = $('#search-form');
 let $bookList = $('#books-list');
 let $currentBook = $('#current-book');
+let $bookDescription = $('.book-description');
 let arrBooks = [];
 
 $searchform.on("submit", function(event){
@@ -47,6 +48,19 @@ $bookList.on('click', '[data-id]', function(event) {
 
     $currentBook.fadeIn();
 
-    $currentBook.find('.book-title') 
-        .text(`${book.volumeInfo.title} | ${book.volumeInfo.authors.join(', ')} (${book.volumeInfo.publishedDate})`)
+    $currentBook.find('.book-title').text(`${book.volumeInfo.title} | ${book.volumeInfo.authors ? book.volumeInfo.authors.join(', ') : "No author"} (${book.volumeInfo.publishedDate})`);
+        
+    $bookDescription.empty();
+
+    // Add new info
+
+    $('<img>').attr('src', book.volumeInfo.imageLinks.thumbnail).appendTo($bookDescription);
+
+    $('<p>').text(book.volumeInfo.description).appendTo($bookDescription);
+
+    $('<a>').attr('href', book.volumeInfo.previewLink)
+        .attr('target', '_blank')
+        .text('Read more...')
+        .addClass('read-link')
+        .appendTo($bookDescription);
 });
